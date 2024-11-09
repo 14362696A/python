@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Produtos</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+        }
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            text-align: left;
+        }
+        td {
+            text-align: center;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Lista de Produtos</h1>
+    <table class="table-auto">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
+                <th>Localização</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto in produtos %}
+            <tr>
+                <td>{{ produto[0] }}</td>
+                <td>{{ produto[1] }}</td>
+                <td>{{ produto[2] }}</td>
+                <td>{{ produto[3] }}</td>
+                <td>{{ produto[4] }}</td>
+                <td>{{ produto[5] }}</td>
+                <td>
+                    <form action="{{ url_for('remover_produto', codigo=produto[0]) }}" method="post" class="inline">
+                        <button type="submit">Remover</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Adicionar Produto</h2>
+    <form action="{{ url_for('adicionar_produto') }}" method="post" class="space-y-6 max-w-3xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Código -->
+            <div class="flex flex-col justify-center relative">
+                <label for="codigo" class="absolute left-2 top-1/2 transform -translate-y-1/2 text-sm font-medium">Código:</label>
+                <input type="text" name="codigo" id="codigo" class="border p-2 rounded w-1/2 mx-auto pt-4 pb-4" required>
+            </div>
+
+            <!-- Nome -->
+            <div class="flex flex-col justify-center relative">
+                <label for="nome" class="absolute left-2 top-1/2 transform -translate-y-1/2 text-sm font-medium">Nome:</label>
+                <input type="text" name="nome" id="nome" class="border p-2 rounded w-1/2 mx-auto pt-4 pb-4" required>
+            </div>
+
+            <!-- Categoria Dropdown -->
+            <div class="flex flex-col justify-center relative">
+                <label for="categoria" class="absolute left-2 top-1/2 transform -translate-y-1/2 text-sm font-medium">Categoria:</label>
+                <select name="categoria" id="categoria" class="border p-2 rounded w-1/2 mx-auto pt-4 pb-4" required>
+                    <option value="eletronicos">Eletrônicos</option>
+                    <option value="moveis">Móveis</option>
+                    <option value="alimentos">Alimentos</option>
+                    <!-- Adicione mais opções conforme necessário -->
+                </select>
+            </div>
+
+            <!-- Quantidade -->
+            <div class="flex flex-col justify-center relative">
+                <label for="quantidade" class="absolute left-2 top-1/2 transform -translate-y-1/2 text-sm font-medium">Quantidade:</label>
+                <input type="number" name="quantidade" id="quantidade" class="border p-2 rounded w-1/2 mx-auto pt-4 pb-4" required>
+            </div>
+
+            <!-- Preço -->
+            <div class="flex flex-col justify-center relative">
+                <label for="preco" class="absolute left-2 top-1/2 transform -translate-y-1/2 text-sm font-medium">Preço:</label>
+                <input type="text" name="preco" id="preco" class="border p-2 rounded w-1/2 mx-auto pt-4 pb-4" required>
+            </div>
+
+            <!-- Localização -->
+            <div class="flex flex-col justify-center relative">
+                <label for="localizacao" class="absolute left-2 top-1/2 transform -translate-y-1/2 text-sm font-medium">Localização:</label>
+                <input type="text" name="localizacao" id="localizacao" class="border p-2 rounded w-1/2 mx-auto pt-4 pb-4" required>
+            </div>
+
+            <!-- Tipo Dropdown -->
+            <div class="flex flex-col justify-center relative">
+                <label for="tipo" class="absolute left-2 top-1/2 transform -translate-y-1/2 text-sm font-medium">Tipo:</label>
+                <select name="tipo" id="tipo" class="border p-2 rounded w-1/2 mx-auto pt-4 pb-4" required>
+                    <option value="produto">Produto</option>
+                    <option value="serviço">Serviço</option>
+                    <!-- Adicione mais opções conforme necessário -->
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded mt-4">Adicionar Produto</button>
+    </form>
+
+</body>
+</html>
